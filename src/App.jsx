@@ -1,12 +1,26 @@
+import { useState } from 'react'
 import './App.css'
-import { Card } from './components/Card'
+import { Cards } from './components/Cards'
+import { Form } from './components/Form'
+
+let autoid = 0
 
 export function App() {
+  const [students, setStudents] = useState([])
+
+  const addStudent = info => {
+    setStudents([...students, { info, id: autoid++ }])
+  }
+
+  const deleteStudent = id => {
+    setStudents(students.filter(student => student.id !== id))
+  }
+
   return (
     <>
       <h1 className='mb-4'>Carga de estudiantes</h1>
-      <form></form>
-      <Card />
+      <Form addStudent={addStudent} />
+      <Cards students={students} deleteStudent={deleteStudent} />
     </>
   )
 }
